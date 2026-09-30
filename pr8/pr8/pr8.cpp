@@ -1,9 +1,8 @@
 #define _CRTDBG_MAP_ALLOC
 #include <cstdlib>
 #include <crtdbg.h>
-#include <cstddef>
-#include <fstream>
 #include <iostream>
+#include <fstream>
 #include <locale>
 
 int main() {
@@ -12,41 +11,35 @@ int main() {
     system("chcp 1251");
     setlocale(LC_ALL, "Russian");
 
-    // все данные лежат в куче
-    const size_t count = 8;
-    const char** names = new const char* [count] {
-        "char", "short", "int", "long long", "float", "double", "size_t", "int*"
-    };
-    size_t* sizes = new size_t[count] {
-        sizeof(char), sizeof(short), sizeof(int), sizeof(long long),
-        sizeof(float), sizeof(double), sizeof(size_t), sizeof(int*)
-    };
+    // размеры типов (size_t) лежат в куче
+    size_t* sizeChar = new size_t(sizeof(char));
+    size_t* sizeInt = new size_t(sizeof(int));
+    size_t* sizeDouble = new size_t(sizeof(double));
+    size_t* sizePtr = new size_t(sizeof(int*));
 
-    size_t* total = new size_t(0);
-    int* ptr = nullptr;
-    std::ofstream* file = new std::ofstream("sizes.txt");
-
-    if (ptr == nullptr) {
-        std::cout << "ptr: nullptr" << std::endl;
+    int* p = nullptr;
+    if (p == nullptr) {
+        std::cout << "p равен nullptr" << std::endl;
     }
 
-    for (size_t i = 0; i < count; ++i) {
-        std::cout << names[i] << ": " << sizes[i] << std::endl;
-        *file << names[i] << ": " << sizes[i] << std::endl;
-        *total += sizes[i];
-    }
-    std::cout << "Сумма: " << *total << std::endl;
-    *file << "Сумма: " << *total << std::endl;
+    std::cout << "char: " << *sizeChar << std::endl;
+    std::cout << "int: " << *sizeInt << std::endl;
+    std::cout << "double: " << *sizeDouble << std::endl;
+    std::cout << "указатель: " << *sizePtr << std::endl;
 
+    // сохраняем результаты в файл
+    std::ofstream* file = new std::ofstream("result.txt");
+    *file << "char: " << *sizeChar << std::endl;
+    *file << "int: " << *sizeInt << std::endl;
+    *file << "double: " << *sizeDouble << std::endl;
+    *file << "указатель: " << *sizePtr << std::endl;
     file->close();
+
     delete file;
-    delete total;
-    delete[] sizes;
-    delete[] names;
-    file = nullptr;
-    total = nullptr;
-    sizes = nullptr;
-    names = nullptr;
+    delete sizeChar;
+    delete sizeInt;
+    delete sizeDouble;
+    delete sizePtr;
 
     return 0;
 }
