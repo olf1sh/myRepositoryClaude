@@ -15,6 +15,8 @@ int main() {
     size_t* sizeChar = new size_t(sizeof(char));
     size_t* sizeInt = new size_t(sizeof(int));
     size_t* sizeDouble = new size_t(sizeof(double));
+    size_t* sizeLongLong = new size_t(sizeof(long long));
+    size_t* sizeLongDouble = new size_t(sizeof(long double));
     size_t* sizePtr = new size_t(sizeof(int*));
 
     int* p = nullptr;
@@ -25,6 +27,8 @@ int main() {
     std::cout << "char: " << *sizeChar << std::endl;
     std::cout << "int: " << *sizeInt << std::endl;
     std::cout << "double: " << *sizeDouble << std::endl;
+    std::cout << "long long: " << *sizeLongLong << std::endl;
+    std::cout << "long double: " << *sizeLongDouble << std::endl;
     std::cout << "указатель: " << *sizePtr << std::endl;
 
     // сохраняем результаты в файл
@@ -32,6 +36,8 @@ int main() {
     *file << "char: " << *sizeChar << std::endl;
     *file << "int: " << *sizeInt << std::endl;
     *file << "double: " << *sizeDouble << std::endl;
+    *file << "long long: " << *sizeLongLong << std::endl;
+    *file << "long double: " << *sizeLongDouble << std::endl;
     *file << "указатель: " << *sizePtr << std::endl;
     file->close();
 
@@ -39,6 +45,8 @@ int main() {
     delete sizeChar;
     delete sizeInt;
     delete sizeDouble;
+    delete sizeLongLong;
+    delete sizeLongDouble;
     delete sizePtr;
 
     return 0;
