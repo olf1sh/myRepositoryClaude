@@ -13,6 +13,7 @@ int main() {
 
     // размеры типов (size_t) лежат в куче
     size_t* sizeChar = new size_t(sizeof(char));
+    size_t* sizeBool = new size_t(sizeof(bool));
     size_t* sizeInt = new size_t(sizeof(int));
     size_t* sizeDouble = new size_t(sizeof(double));
     size_t* sizeLongLong = new size_t(sizeof(long long));
@@ -25,6 +26,7 @@ int main() {
     }
 
     std::cout << "char: " << *sizeChar << std::endl;
+    std::cout << "bool: " << *sizeBool << std::endl;
     std::cout << "int: " << *sizeInt << std::endl;
     std::cout << "double: " << *sizeDouble << std::endl;
     std::cout << "long long: " << *sizeLongLong << std::endl;
@@ -34,6 +36,7 @@ int main() {
     // сохраняем результаты в файл
     std::ofstream* file = new std::ofstream("result.txt");
     *file << "char: " << *sizeChar << std::endl;
+    *file << "bool: " << *sizeBool << std::endl;
     *file << "int: " << *sizeInt << std::endl;
     *file << "double: " << *sizeDouble << std::endl;
     *file << "long long: " << *sizeLongLong << std::endl;
@@ -43,6 +46,7 @@ int main() {
 
     delete file;
     delete sizeChar;
+    delete sizeBool;
     delete sizeInt;
     delete sizeDouble;
     delete sizeLongLong;
