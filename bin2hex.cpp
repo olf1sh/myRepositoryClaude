@@ -20,13 +20,20 @@ int main() {
     string s;
     cin >> s;
 
-    // Делим число на целую и дробную части
-    string whole = s;
+    // Делим число на целую и дробную части: идём по символам,
+    // до точки кладём их в whole, после точки - в frac
+    string whole = "";
     string frac = "";
-    int dot = s.find('.');
-    if (dot != -1) {
-        whole = s.substr(0, dot);
-        frac = s.substr(dot + 1);
+    bool afterDot = false;
+    int len = s.size();
+    for (int i = 0; i < len; i++) {
+        if (s[i] == '.') {
+            afterDot = true;
+        } else if (afterDot) {
+            frac = frac + s[i];
+        } else {
+            whole = whole + s[i];
+        }
     }
 
     // Дополняем нулями до длины, кратной 4
