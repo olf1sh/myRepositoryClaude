@@ -2,11 +2,25 @@
 #include <string>
 using namespace std;
 
+// Переводит строку из нулей и единиц (длина кратна 4) в шестнадцатеричную строку
+string toHex(string bits) {
+    string digits = "0123456789ABCDEF";
+    string hex = "";
+    int n = bits.size();
+    for (int i = 0; i < n; i += 4) {
+        // 4 бита -> число от 0 до 15
+        int number = (bits[i] - '0') * 8 + (bits[i + 1] - '0') * 4
+                   + (bits[i + 2] - '0') * 2 + (bits[i + 3] - '0');
+        hex = hex + digits[number];
+    }
+    return hex;
+}
+
 int main() {
     string s;
     cin >> s;
 
-    // 1. Делим число на целую и дробную часть по точке
+    // Делим число на целую и дробную части
     string whole = s;
     string frac = "";
     int dot = s.find('.');
@@ -15,50 +29,33 @@ int main() {
         frac = s.substr(dot + 1);
     }
 
-    // 2. Убираем незначащие нули: слева у целой части, справа у дробной
-    while (whole.size() > 0 && whole[0] == '0') {
-        whole.erase(0, 1);
-    }
-    while (frac.size() > 0 && frac[frac.size() - 1] == '0') {
-        frac.erase(frac.size() - 1, 1);
-    }
-    if (whole == "") {
-        whole = "0";
-    }
-
-    // 3. Дополняем нулями до длины, кратной 4
-    //    (целую часть - слева, дробную - справа)
+    // Дополняем нулями до длины, кратной 4
     while (whole.size() % 4 != 0) {
-        whole = "0" + whole;
+        whole = "0" + whole;   // слева
     }
     while (frac.size() % 4 != 0) {
-        frac = frac + "0";
+        frac = frac + "0";     // справа
     }
 
-    string digits = "0123456789ABCDEF";
+    string a = toHex(whole);
+    string b = toHex(frac);
 
-    // 4. Целая часть: каждые 4 бита -> одна шестнадцатеричная цифра
-    string result = "";
-    for (int i = 0; i < whole.size(); i += 4) {
-        int number = 0;
-        for (int j = 0; j < 4; j++) {
-            number = number * 2 + (whole[i + j] - '0');
-        }
-        result = result + digits[number];
+    // Убираем лишние нули: слева у целой части, справа у дробной
+    while (a.size() > 1 && a[0] == '0') {
+        a.erase(0, 1);
+    }
+    while (b.size() > 0 && b[b.size() - 1] == '0') {
+        b.erase(b.size() - 1, 1);
+    }
+    if (a == "") {
+        a = "0";
     }
 
-    // 5. Дробная часть - так же, если она не пустая
-    if (frac.size() > 0) {
-        result = result + ".";
-        for (int i = 0; i < frac.size(); i += 4) {
-            int number = 0;
-            for (int j = 0; j < 4; j++) {
-                number = number * 2 + (frac[i + j] - '0');
-            }
-            result = result + digits[number];
-        }
+    // Выводим результат
+    if (b == "") {
+        cout << a << endl;
+    } else {
+        cout << a << "." << b << endl;
     }
-
-    cout << result << endl;
     return 0;
 }
