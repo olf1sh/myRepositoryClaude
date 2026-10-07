@@ -5,7 +5,6 @@
 #include <ctime>
 
 void getArray(int*& arr, int& n) {
-    std::cout << "Enter array size N: ";
     std::cin >> n;
     arr = new int[n];
 }
@@ -37,15 +36,15 @@ int main() {
     }
     double average = (double)sum / n;
 
-    std::cout << "Array: ";
+    std::cout << "arr: ";
     for (int i = 0; i < n; i++) {
         std::cout << *(arr + i) << " ";
     }
     std::cout << std::endl;
 
-    std::cout << "Min: " << minValue << std::endl;
-    std::cout << "Max: " << maxValue << std::endl;
-    std::cout << "Average: " << average << std::endl;
+    std::cout << "min: " << minValue << std::endl;
+    std::cout << "max: " << maxValue << std::endl;
+    std::cout << "avg: " << average << std::endl;
 
     delete[] arr;
     arr = nullptr;
